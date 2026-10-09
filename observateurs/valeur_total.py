@@ -1,7 +1,7 @@
 from observateurs.observateur import Observateur
 
 
-class Resume(Observateur):
+class ValeurTotale(Observateur):
 
     def __init__(self, label_valeur, label_variation):
         self.label_valeur = label_valeur
