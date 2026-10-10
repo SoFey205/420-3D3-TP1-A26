@@ -37,32 +37,15 @@ class Portefeuille(Sujet):
     def __init__(self):
         super().__init__()
 
-        self._titres = {
-            ticker: donnees.copy()
-            for ticker, donnees in TITRES.items()
-        }
+        self._titres = {ticker: donnees.copy()
+            for ticker, donnees in TITRES.items()}
 
         self._prix_actuels = {}
 
-    def ajouter_titre(
-        self,
-        ticker,
-        quantite,
-        prix,
-        seuil_haut=None,
-        seuil_bas=None
-    ):
-        self._titres[ticker] = {
-            "quantite": quantite,
-            "seuil_haut": round(
-                seuil_haut if seuil_haut is not None else prix * 1.2,
-                2
-            ),
-            "seuil_bas": round(
-                seuil_bas if seuil_bas is not None else prix * 0.8,
-                2
-            )
-        }
+    def ajouter_titre(self, ticker, quantite, prix, 
+                      seuil_haut=None, seuil_bas=None):
+        self._titres[ticker] = {"quantite": quantite, "seuil_haut": round(seuil_haut if seuil_haut is not None else prix * 1.2, 2),
+            "seuil_bas": round(seuil_bas if seuil_bas is not None else prix * 0.8, 2)}
 
         self.notifier()
 
@@ -75,12 +58,7 @@ class Portefeuille(Sujet):
         self._titres[ticker]["quantite"] = quantite
         self.notifier()
 
-    def modifier_seuils(
-        self,
-        ticker,
-        seuil_haut=None,
-        seuil_bas=None
-    ):
+    def modifier_seuils(self, ticker, seuil_haut=None, seuil_bas=None):
         if seuil_bas is not None:
             self._titres[ticker]["seuil_bas"] = round(seuil_bas, 2)
 
@@ -90,10 +68,8 @@ class Portefeuille(Sujet):
         self.notifier()
 
     def mettre_a_jour_prix(self):
-        self._prix_actuels = {
-            ticker: recuperer_prix(ticker)
-            for ticker in self._titres
-        }
+        self._prix_actuels = {ticker: recuperer_prix(ticker)
+            for ticker in self._titres}
 
         self.notifier()
 
